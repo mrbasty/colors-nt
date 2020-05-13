@@ -5,7 +5,7 @@ function Header() {
     <div>
       <header>
         <h1>Colors</h1>
-        <p>by Bastien Adam</p>
+        <p>by Bastien Adeeeam</p>
       </header>
     </div>
   );
