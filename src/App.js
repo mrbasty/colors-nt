@@ -1,26 +1,53 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import Card from "./component/Card";
+import clipboard from "clipboard-copy";
+import Header from "./component/Header";
+import Footer from "./component/Footer";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      ColorPalettes: []
+    };
+  }
+
+  componentDidMount() {
+    fetch(
+      "https://v2-api.sheety.co/69072a59b5982e9dd27aaa5bf290e8c6/colorsnt/data"
+    )
+      .then(response => response.json())
+      .then(data => {
+        this.setState({
+          ColorPalettes: data.data
+        });
+      });
+  }
+
+  render() {
+    var datapalette = this.state.ColorPalettes;
+
+    const AllCards = datapalette.map(item => (
+      <Card
+        key={item.id}
+        name={item.name}
+        firstColor={item.firstColor}
+        secondColor={item.secondColor}
+        thirdColor={item.thirdColor}
+        fourthColor={item.fourthColor}
+      />
+    ));
+
+    return (
+      <div>
+        <Header />
+        <div class="card-container">{AllCards}</div>
+        <Footer />
+      </div>
+    );
+  }
 }
 
 export default App;
